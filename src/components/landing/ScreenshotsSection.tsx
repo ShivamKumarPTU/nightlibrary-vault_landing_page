@@ -1,5 +1,6 @@
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
+import { useImagePreloader } from "@/hooks/useImagePreloader";
 
 import screenshotHome from "@/assets/screenshot-home.png";
 import screenshotVault from "@/assets/screenshot-vault.png";
@@ -27,6 +28,9 @@ const ScreenshotsSection = () => {
   const [active, setActive] = useState(0);
   const sectionRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
+
+  // Preload all screenshot images so switching is instant
+  useImagePreloader(screens.map((s) => s.src));
   const titleInView = useInView(titleRef, { once: false, margin: "-60px" });
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const x = useTransform(scrollYProgress, [0, 1], [100, -100]);
@@ -106,7 +110,7 @@ const ScreenshotsSection = () => {
               style={{ rotateX: rotate3d }}
               className="w-[260px] h-[520px] sm:w-[300px] sm:h-[600px] phone-mockup"
             >
-              <img src={screens[active].src} alt={screens[active].label} className="w-full h-full object-cover" />
+              <img src={screens[active].src} alt={screens[active].label} className="w-full h-full object-cover" loading="eager" decoding="async" fetchPriority="high" />
               <motion.div
                 animate={{ opacity: [0, 0.3, 0], x: ["-100%", "200%"] }}
                 transition={{ duration: 3, repeat: Infinity, repeatDelay: 5 }}
@@ -156,7 +160,7 @@ const ScreenshotsSection = () => {
                     : "border-border/50 opacity-40 hover:opacity-80"
                 }`}
               >
-                <img src={screen.src} alt={screen.label} className="w-full h-full object-cover" />
+                <img src={screen.src} alt={screen.label} className="w-full h-full object-cover" loading="lazy" decoding="async" />
                 {i === active && (
                   <motion.div
                     layoutId="activeThumb"

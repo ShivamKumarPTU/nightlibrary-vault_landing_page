@@ -1,6 +1,7 @@
 import { motion, useMotionValue, useScroll, useSpring, useTransform, AnimatePresence } from "framer-motion";
 import { CSSProperties, MouseEvent, ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Download, Play, Sparkles } from "lucide-react";
+import { useImagePreloader } from "@/hooks/useImagePreloader";
 import FlipButton from "./FlipButton";
 import screenshot1 from "@/assets/Screenshot_20260501_115130.png";
 import screenshot2 from "@/assets/Screenshot_20260501_115148.png";
@@ -110,6 +111,9 @@ const AndroidMockupSlider = () => {
   const [direction, setDirection] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Preload ALL slider images immediately on mount so slides are instant
+  useImagePreloader(screens.map((s) => s.src));
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
   const autoPlayRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -279,6 +283,9 @@ const AndroidMockupSlider = () => {
                     className="w-full h-auto object-contain"
                     style={crispImageStyle}
                     draggable={false}
+                    loading={isActive ? "eager" : "lazy"}
+                    decoding="async"
+                    fetchPriority={isActive && index === 0 ? "high" : "auto"}
                   />
 
                   {/* Shine effect on active */}

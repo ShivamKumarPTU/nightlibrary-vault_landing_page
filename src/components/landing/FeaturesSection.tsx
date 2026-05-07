@@ -7,6 +7,7 @@ import {
   useScroll,
 } from "framer-motion";
 import { useRef, useState, MouseEvent } from "react";
+import { useImagePreloader } from "@/hooks/useImagePreloader";
 import { X } from "lucide-react";
 import { RevealLine } from "./TextReveal";
 
@@ -123,6 +124,8 @@ const FeatureCard = ({
           src={feature.image}
           alt={feature.title}
           className="w-full h-auto block transition-transform duration-700 ease-out group-hover:scale-[1.06]"
+          loading="lazy"
+          decoding="async"
         />
 
         {/* ── SLIDE-UP OVERLAY ── */}
@@ -189,6 +192,9 @@ const FeatureRow = ({
 
 const FeaturesSection = () => {
   const [selectedFeature, setSelectedFeature] = useState<typeof features[0] | null>(null);
+
+  // Preload all 12 feature images instantly on mount
+  useImagePreloader(features.map((f) => f.image));
 
   return (
     <section id="features" className="relative py-24 sm:py-32 overflow-hidden">
@@ -273,6 +279,9 @@ const FeaturesSection = () => {
                 src={selectedFeature.image}
                 alt={selectedFeature.title}
                 className="max-w-full max-h-[70vh] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
               />
 
               <motion.div
