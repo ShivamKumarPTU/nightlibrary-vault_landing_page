@@ -1,6 +1,7 @@
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { useImagePreloader } from "@/hooks/useImagePreloader";
+import ProgressiveImage from "./ProgressiveImage";
 
 import screenshotHome from "@/assets/screenshot-home.png";
 import screenshotVault from "@/assets/screenshot-vault.png";
@@ -110,7 +111,7 @@ const ScreenshotsSection = () => {
               style={{ rotateX: rotate3d }}
               className="w-[260px] h-[520px] sm:w-[300px] sm:h-[600px] phone-mockup"
             >
-              <img src={screens[active].src} alt={screens[active].label} className="w-full h-full object-cover" loading="eager" decoding="async" fetchPriority="high" />
+              <ProgressiveImage src={screens[active].src} alt={screens[active].label} className="w-full h-full" />
               <motion.div
                 animate={{ opacity: [0, 0.3, 0], x: ["-100%", "200%"] }}
                 transition={{ duration: 3, repeat: Infinity, repeatDelay: 5 }}
@@ -160,7 +161,7 @@ const ScreenshotsSection = () => {
                     : "border-border/50 opacity-40 hover:opacity-80"
                 }`}
               >
-                <img src={screen.src} alt={screen.label} className="w-full h-full object-cover" loading="lazy" decoding="async" />
+                <ProgressiveImage src={screen.src} alt={screen.label} className="w-full h-full" />
                 {i === active && (
                   <motion.div
                     layoutId="activeThumb"

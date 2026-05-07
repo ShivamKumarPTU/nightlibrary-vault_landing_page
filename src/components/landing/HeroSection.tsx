@@ -25,6 +25,7 @@ import screenshot19 from "@/assets/Screenshot_20260501_120105.png";
 import screenshot20 from "@/assets/Screenshot_20260501_120217.png";
 import HeroVideoBackground from "./HeroVideoBackground";
 import AnimatedCounter from "./AnimatedCounter";
+import ProgressiveImage from "./ProgressiveImage";
 
 const screens = [
   { src: screenshot2, label: "Welcome" },
@@ -277,15 +278,11 @@ const AndroidMockupSlider = () => {
                   }`}
                   style={{ width: "clamp(180px, 28vw, 240px)" }}
                 >
-                  <img
+                  <ProgressiveImage
                     src={screens[index].src}
                     alt={`${screens[index].label} screenshot`}
-                    className="w-full h-auto object-contain"
-                    style={crispImageStyle}
-                    draggable={false}
-                    loading={isActive ? "eager" : "lazy"}
-                    decoding="async"
-                    fetchPriority={isActive && index === 0 ? "high" : "auto"}
+                    className="w-full h-auto"
+                    style={{ ...crispImageStyle, aspectRatio: "1/2" }}
                   />
 
                   {/* Shine effect on active */}

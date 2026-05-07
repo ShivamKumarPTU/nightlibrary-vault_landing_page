@@ -10,6 +10,7 @@ import { useRef, useState, MouseEvent } from "react";
 import { useImagePreloader } from "@/hooks/useImagePreloader";
 import { X } from "lucide-react";
 import { RevealLine } from "./TextReveal";
+import ProgressiveImage from "./ProgressiveImage";
 
 // Import custom feature images
 import smartOrgImg from "@/assets/SmartOrganisation.png";
@@ -120,12 +121,10 @@ const FeatureCard = ({
         className="relative w-full rounded-[2rem] overflow-hidden border border-white/10 bg-white/[0.02] backdrop-blur-2xl shadow-2xl transition-[border-color,background] duration-500 group-hover:border-primary/40 group-hover:bg-white/[0.04]"
       >
         {/* Image — full original aspect ratio */}
-        <img
+        <ProgressiveImage
           src={feature.image}
           alt={feature.title}
           className="w-full h-auto block transition-transform duration-700 ease-out group-hover:scale-[1.06]"
-          loading="lazy"
-          decoding="async"
         />
 
         {/* ── SLIDE-UP OVERLAY ── */}
@@ -275,13 +274,10 @@ const FeaturesSection = () => {
               </button>
 
               {/* Image */}
-              <img
+              <ProgressiveImage
                 src={selectedFeature.image}
                 alt={selectedFeature.title}
-                className="max-w-full max-h-[70vh] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
-                loading="eager"
-                decoding="async"
-                fetchPriority="high"
+                className="max-w-full max-h-[70vh] drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
               />
 
               <motion.div
