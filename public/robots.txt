@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://night-vault.netlify.app/sitemap.xml
+Sitemap: https://night-vault.vercel.app/sitemap.xml
