@@ -33,7 +33,7 @@ const Index = () => (
 
     {/* Content */}
     <div className="relative z-10">
-      {/* <Navbar /> */}
+      <Navbar />
       <HeroSection />
       <MarqueeTicker />
       <FeaturesSection />
