@@ -5,6 +5,7 @@ import emailjs from "@emailjs/browser";
 import { RevealLine } from "./TextReveal";
 import React from "react";
 import { createPortal } from "react-dom";
+import { useNavigate } from "react-router-dom";
 /* ================= CONFIG ================= */
 
 const EMAILJS_SERVICE_ID = "service_i597mpn";
@@ -661,6 +662,7 @@ const QuickLinkCard = ({
 /* ================= CONTACT SECTION ================= */
 
 const ContactSection = () => {
+  const navigate = useNavigate();
   const sectionRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -912,7 +914,13 @@ const ContactSection = () => {
                     key={item.label}
                     item={item}
                     index={i}
-                    onClick={() => setActiveModal(item.modalKey)}
+                    onClick={() => {
+                      if (item.modalKey === "privacy") {
+                        navigate("/privacy.html");
+                      } else {
+                        setActiveModal(item.modalKey);
+                      }
+                    }}
                   />
                 ))}
               </div>

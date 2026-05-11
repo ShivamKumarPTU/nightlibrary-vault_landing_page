@@ -7,6 +7,9 @@ type HeroVideoBackgroundProps = {
 
 const HeroVideoBackground = ({ backgroundImage }: HeroVideoBackgroundProps) => (
   <div className="absolute inset-0 z-0 overflow-hidden">
+    {!backgroundImage && (
+      <link rel="preload" href={heroVideo} as="video" type="video/mp4" />
+    )}
     {backgroundImage ? (
       <motion.div
         initial={{ opacity: 0, scale: 1.03 }}
@@ -27,6 +30,8 @@ const HeroVideoBackground = ({ backgroundImage }: HeroVideoBackgroundProps) => (
           loop
           muted
           playsInline
+          preload="auto"
+          fetchPriority="high"
           className="absolute inset-0 w-full h-full object-cover"
           style={{ opacity: 0.35 }}
         >

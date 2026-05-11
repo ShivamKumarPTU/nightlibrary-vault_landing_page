@@ -12,9 +12,7 @@ const ProgressiveImage = ({ src, alt, className, style }: ProgressiveImageProps)
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    const img = new Image();
-    img.src = src;
-    img.onload = () => setIsLoaded(true);
+    setIsLoaded(false);
   }, [src]);
 
   return (

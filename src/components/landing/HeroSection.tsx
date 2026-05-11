@@ -1,7 +1,6 @@
 import { motion, useMotionValue, useScroll, useSpring, useTransform, AnimatePresence } from "framer-motion";
 import { CSSProperties, MouseEvent, ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Download, Play, Sparkles } from "lucide-react";
-import { useImagePreloader } from "@/hooks/useImagePreloader";
 import FlipButton from "./FlipButton";
 import screenshot1 from "@/assets/Screenshot_20260501_115130.png";
 import screenshot2 from "@/assets/Screenshot_20260501_115148.png";
@@ -25,7 +24,6 @@ import screenshot19 from "@/assets/Screenshot_20260501_120105.png";
 import screenshot20 from "@/assets/Screenshot_20260501_120217.png";
 import HeroVideoBackground from "./HeroVideoBackground";
 import AnimatedCounter from "./AnimatedCounter";
-import ProgressiveImage from "./ProgressiveImage";
 
 const screens = [
   { src: screenshot2, label: "Welcome" },
@@ -113,8 +111,6 @@ const AndroidMockupSlider = () => {
   const [isPaused, setIsPaused] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Preload ALL slider images immediately on mount so slides are instant
-  useImagePreloader(screens.map((s) => s.src));
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
   const autoPlayRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -278,11 +274,12 @@ const AndroidMockupSlider = () => {
                   }`}
                   style={{ width: "clamp(180px, 28vw, 240px)" }}
                 >
-                  <ProgressiveImage
+                  <img
                     src={screens[index].src}
                     alt={`${screens[index].label} screenshot`}
-                    className="w-full h-auto"
+                    className="w-full h-auto object-cover"
                     style={{ ...crispImageStyle, aspectRatio: "1/2" }}
+                    loading="eager"
                   />
 
                   {/* Shine effect on active */}
@@ -366,6 +363,19 @@ const AndroidMockupSlider = () => {
                 ? "w-7 h-2 bg-primary shadow-[0_0_12px_hsl(var(--primary)/0.6)]"
                 : "w-2 h-2 bg-muted-foreground/40 hover:bg-muted-foreground/70"
             }`}
+          />
+        ))}
+      </div>
+
+      {/* Declarative Asset Preloader — completely native browser preload scanner caching with high fetch priority, no JS DOM instantiation */}
+      <div style={{ display: "none" }} aria-hidden="true">
+        {screens.map((screen, idx) => (
+          <img
+            key={`preload-img-${idx}`}
+            src={screen.src}
+            loading="eager"
+            fetchPriority="high"
+            alt=""
           />
         ))}
       </div>

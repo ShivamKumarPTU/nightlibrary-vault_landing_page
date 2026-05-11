@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — NightVault</title>
+  
+  <!-- Preconnect to Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --background: #07070a;
+      --foreground: #f2f2f7;
+      --card-bg: rgba(13, 13, 18, 0.65);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --primary: #a855f7; /* hsl(270 80% 60%) */
+      --accent: #06b6d4;  /* hsl(190 90% 50%) */
+      --warm: #f59e0b;    /* hsl(35 100% 55%) */
+      --text-muted: #9ba3af;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--background);
+      color: var(--foreground);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.7;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Animated background layers */
+    .bg-layers {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    /* Noise overlay */
+    .noise-overlay {
+      position: fixed;
+      inset: -50%;
+      width: 200%;
+      height: 200%;
+      background: transparent url('http://assets.iceable.com/img/noise-transparent.png') repeat 0 0;
+      opacity: 0.04;
+      pointer-events: none;
+      z-index: 5;
+      animation: noise-anim .2s infinite;
+    }
+
+    @keyframes noise-anim {
+      0% { transform: translate(0,0) }
+      10% { transform: translate(-5%,-5%) }
+      20% { transform: translate(-10%,5%) }
+      30% { transform: translate(5%,-10%) }
+      40% { transform: translate(-5%,15%) }
+      50% { transform: translate(-10%,5%) }
+      60% { transform: translate(15%,0) }
+      70% { transform: translate(0,10%) }
+      80% { transform: translate(-15%,0) }
+      90% { transform: translate(10%,5%) }
+      100% { transform: translate(5%,0) }
+    }
+
+    /* Glowing gradient mesh blobs */
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.7;
+      mix-blend-mode: screen;
+    }
+
+    .blob-1 {
+      top: -10%;
+      left: -10%;
+      width: 50vw;
+      height: 50vw;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.08) 0%, transparent 70%);
+      animation: float-1 25s ease-in-out infinite;
+    }
+
+    .blob-2 {
+      top: 30%;
+      right: -10%;
+      width: 45vw;
+      height: 45vw;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.06) 0%, transparent 70%);
+      animation: float-2 28s ease-in-out infinite;
+    }
+
+    .blob-3 {
+      bottom: -10%;
+      left: 20%;
+      width: 40vw;
+      height: 40vw;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.04) 0%, transparent 70%);
+      animation: float-3 32s ease-in-out infinite;
+    }
+
+    @keyframes float-1 {
+      0%, 100% { transform: scale(1) translate(0, 0) rotate(0deg); }
+      33% { transform: scale(1.15) translate(40px, -20px) rotate(15deg); }
+      66% { transform: scale(0.9) translate(-20px, 30px) rotate(-15deg); }
+    }
+
+    @keyframes float-2 {
+      0%, 100% { transform: scale(1) translate(0, 0) rotate(0deg); }
+      33% { transform: scale(0.85) translate(-30px, 40px) rotate(-20deg); }
+      66% { transform: scale(1.2) translate(50px, -30px) rotate(20deg); }
+    }
+
+    @keyframes float-3 {
+      0%, 100% { transform: scale(1) translate(0, 0); }
+      50% { transform: scale(1.25) translate(30px, -40px); }
+    }
+
+    /* Aurora Scanline */
+    .aurora {
+      position: absolute;
+      top: -10%;
+      left: -10%;
+      width: 120%;
+      height: 30%;
+      background: linear-gradient(90deg, transparent 0%, rgba(168, 85, 247, 0.05) 20%, rgba(6, 182, 212, 0.07) 50%, rgba(168, 85, 247, 0.05) 80%, transparent 100%);
+      filter: blur(60px);
+      border-radius: 50%;
+      animation: aurora-float 20s ease-in-out infinite;
+    }
+
+    @keyframes aurora-float {
+      0%, 100% { transform: translate(-5%, -5%) rotate(-2deg) scaleX(1); }
+      50% { transform: translate(5%, 5%) rotate(2deg) scaleX(1.15); }
+    }
+
+    /* Main Container layout */
+    .page-container {
+      position: relative;
+      z-index: 10;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 100px 24px 80px;
+    }
+
+    /* Header Nav / Back Button */
+    .top-nav {
+      position: absolute;
+      top: 40px;
+      left: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--foreground);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 10px 18px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(12px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(168, 85, 247, 0.3);
+      transform: translateX(-4px);
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.15);
+    }
+
+    .back-btn svg {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.3s ease;
+    }
+
+    .back-btn:hover svg {
+      transform: translateX(-3px);
+    }
+
+    /* Premium Glassmorphic Card */
+    .policy-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 48px;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle top glowing rim */
+    .policy-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 24px;
+      padding: 1.2px;
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.45) 0%, transparent 40%, transparent 60%, rgba(6, 182, 212, 0.45) 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    /* Typography styling */
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.75rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #f2f2f7 30%, #a855f7 70%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .policy-meta {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, var(--border-color) 0%, rgba(255,255,255,0.02) 100%);
+      margin: 32px 0;
+    }
+
+    h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #f2f2f7;
+      margin-top: 2.5rem;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Glow bar next to h2 */
+    h2::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 1.4rem;
+      border-radius: 4px;
+      background: linear-gradient(to bottom, var(--primary), var(--accent));
+    }
+
+    h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-top: 1.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      color: rgba(242, 242, 247, 0.85);
+      font-size: 1rem;
+    }
+
+    strong {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    ul {
+      list-style-type: none;
+      margin-bottom: 1.5rem;
+    }
+
+    li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 0.5rem;
+      color: rgba(242, 242, 247, 0.85);
+      font-size: 0.95rem;
+    }
+
+    li::before {
+      content: '•';
+      position: absolute;
+      left: 6px;
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    /* Styled Tables */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      margin: 1.5rem 0;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      background: rgba(255, 255, 255, 0.01);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    th {
+      background: rgba(255, 255, 255, 0.03);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border-color);
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    td {
+      padding: 12px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: rgba(242, 242, 247, 0.8);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.01);
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.2s ease;
+      border-bottom: 1px dashed rgba(6, 182, 212, 0.4);
+    }
+
+    a:hover {
+      color: var(--primary);
+      border-bottom-style: solid;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--background);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .page-container {
+        padding: 90px 16px 40px;
+      }
+      .policy-card {
+        padding: 24px;
+        border-radius: 16px;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      h2 {
+        font-size: 1.35rem;
+      }
+      .top-nav {
+        top: 24px;
+        left: 16px;
+      }
+      .back-btn {
+        padding: 8px 14px;
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Particle Background layer -->
+  <div class="bg-layers">
+    <div class="noise-overlay"></div>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="aurora"></div>
+    <canvas id="particles-canvas" style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.4;"></canvas>
+  </div>
+
+  <div class="page-container">
+    <div class="top-nav">
+      <a href="/" class="back-btn">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+        </svg>
+        Back to Home
+      </a>
+    </div>
+
+    <main class="policy-card">
+      <h1>Privacy Policy</h1>
+      
+      <div class="policy-meta">
+        <div class="meta-item">
+          <strong>Developer:</strong> mShivam | App Studio
+        </div>
+        <div class="meta-item">
+          <strong>App Name:</strong> NightVault
+        </div>
+        <div class="meta-item">
+          <strong>Effective Date:</strong> May 11, 2025
+        </div>
+        <div class="meta-item">
+          <strong>Last Updated:</strong> May 11, 2025
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <h2>1. Introduction</h2>
+      <p>Welcome to NightVault ("the App"), developed and maintained by <strong>mShivam | App Studio</strong> ("we", "us", or "our"). NightVault is a privacy-first, offline media vault application for Android that allows users to securely store, encrypt, organise, and manage personal media including photos, videos, audio, documents, contacts, and passwords — entirely on their own device.</p>
+      <p>This Privacy Policy explains what information the App accesses, how it is used, how it is protected, and your rights as a user. By installing and using NightVault, you agree to the terms described in this policy. If you do not agree, please uninstall the App.</p>
+
+      <h2>2. Our Core Privacy Principle</h2>
+      <p><strong>NightVault is built on a zero-data-collection philosophy.</strong></p>
+      <ul>
+        <li>All data you store in NightVault remains on your device at all times.</li>
+        <li>We do not operate any servers that receive, store, or process your personal content.</li>
+        <li>We do not sell, share, rent, or trade your data with any third party for commercial purposes.</li>
+        <li>We do not collect analytics, usage statistics, crash reports, or telemetry of any kind.</li>
+        <li>We do not display advertisements.</li>
+      </ul>
+
+      <h2>3. Information the App Accesses</h2>
+      <p>NightVault does not collect or transmit personal data. However, to function correctly, the App requires access to certain on-device data and system capabilities. Below is a complete and transparent explanation of every permission the App requests and why.</p>
+
+      <h3>3.1 Media & File Storage</h3>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Permission</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>READ_MEDIA_IMAGES</strong></td>
+              <td>Import photos from your device gallery into the encrypted vault</td>
+            </tr>
+            <tr>
+              <td><strong>READ_MEDIA_VIDEO</strong></td>
+              <td>Import videos from your device storage into the encrypted vault</td>
+            </tr>
+            <tr>
+              <td><strong>READ_MEDIA_AUDIO</strong></td>
+              <td>Import audio files from your device into the encrypted vault</td>
+            </tr>
+            <tr>
+              <td><strong>READ_EXTERNAL_STORAGE</strong></td>
+              <td>Required on older Android versions (below Android 13) for media access</td>
+            </tr>
+            <tr>
+              <td><strong>WRITE_EXTERNAL_STORAGE</strong></td>
+              <td>Required on older Android versions to save files to device storage</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>All imported media files are encrypted immediately on import and stored locally within the App's private encrypted storage. Original files are optionally deleted from the gallery after import, based on your preference.</p>
+
+      <h3>3.2 Camera</h3>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Permission</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>CAMERA</strong></td>
+              <td>Allows you to capture photos or videos directly into the vault without saving to the gallery</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Photos and videos taken through NightVault's built-in camera are written directly into the encrypted vault and never appear in your device gallery.</p>
+
+      <h3>3.3 Contacts</h3>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Permission</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>READ_CONTACTS</strong></td>
+              <td>Allows you to import specific contacts from your device into the private contacts vault</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>NightVault only reads contact information that you explicitly choose to import. No contacts are uploaded, synced, or shared outside the App. All imported contact data is encrypted and stored locally.</p>
+
+      <h3>3.4 Biometric Authentication</h3>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Permission</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>USE_BIOMETRIC</strong></td>
+              <td>Allows fingerprint or face authentication to unlock the vault</td>
+            </tr>
+            <tr>
+              <td><strong>USE_FINGERPRINT</strong></td>
+              <td>Legacy biometric support for older Android devices</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Biometric authentication is handled entirely by the Android operating system's secure hardware enclave. NightVault never receives, stores, or transmits your biometric data in any form. No fingerprint or facial data ever leaves your device's secure processor.</p>
+
+      <h3>3.5 Overlay & Floating Launcher</h3>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Permission</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>SYSTEM_ALERT_WINDOW</strong></td>
+              <td>Powers the optional Floating Quick Launcher — a quick-access bubble overlay for fast vault entry</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>This permission is optional. The floating launcher can be disabled at any time from the App settings. It does not monitor, read, or interact with other apps on your screen.</p>
+
+      <h3>3.6 Foreground Services</h3>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Permission</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>FOREGROUND_SERVICE</strong></td>
+              <td>Keeps encryption, decryption, and download operations running reliably in the background</td>
+            </tr>
+            <tr>
+              <td><strong>FOREGROUND_SERVICE_DATA_SYNC</strong></td>
+              <td>Ensures large file imports and encryption tasks are not interrupted by the system</td>
+            </tr>
+            <tr>
+              <td><strong>FOREGROUND_SERVICE_SPECIAL_USE</strong></td>
+              <td>Powers the background downloader service for in-app media downloads</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>These services run only when you initiate an operation (such as importing or downloading files). They do not run persistently or track your activity. All operations performed by these services happen entirely on your device.</p>
+
+      <h3>3.7 Internet Access</h3>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Permission</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>INTERNET</strong></td>
+              <td>Required for the built-in browser and media downloader (yt-dlp) to download files from the web</td>
+            </tr>
+            <tr>
+              <td><strong>ACCESS_NETWORK_STATE</strong></td>
+              <td>Checks network availability before initiating downloads</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The App uses internet access solely for downloading media files that you explicitly request through the built-in browser or downloader. The App does not use internet access to send your data, files, or any personal information to any external server.</p>
+
+      <h3>3.8 Notifications</h3>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Permission</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>POST_NOTIFICATIONS</strong></td>
+              <td>Displays discreet, silent download progress notifications</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Notifications are used only to show download or import progress. They do not reveal any content names or vault information on the lock screen.</p>
+
+      <h3>3.9 Vibration</h3>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Permission</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>VIBRATE</strong></td>
+              <td>Powers the "Shake to Lock" feature — shaking the device instantly locks the vault</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="divider"></div>
+
+      <h2>4. Data We Do NOT Collect</h2>
+      <p>To be completely clear, NightVault does not collect any of the following:</p>
+      <ul>
+        <li>Your name, email address, or account information (no accounts required)</li>
+        <li>Your location or GPS data</li>
+        <li>Your device's advertising ID or any unique identifier</li>
+        <li>Crash reports or diagnostic logs sent to our servers</li>
+        <li>Usage statistics or in-app behaviour analytics</li>
+        <li>The names, contents, or metadata of files you store in the vault</li>
+        <li>Your passwords or contact data stored in the vault</li>
+        <li>Any data transmitted to mShivam | App Studio servers</li>
+      </ul>
+
+      <h2>5. Encryption & Security</h2>
+      <p>NightVault uses industry-standard encryption to protect your data at rest on your device.</p>
+      <p><strong>Database Encryption:</strong> All metadata, contact information, and password entries stored in the App's database are encrypted using SQLCipher, an open-source library implementing AES-256 encryption for SQLite databases.</p>
+      <p><strong>File Encryption:</strong> Media files and documents stored in the vault are protected using the Android Jetpack Security library (androidx.security:security-crypto), which uses AES-256-GCM encryption.</p>
+      <p><strong>Authentication:</strong> The vault is protected by your choice of a 4-digit PIN, biometric authentication (fingerprint or face), or both. The "Shake to Lock" feature provides instant locking by physically shaking the device.</p>
+      <p><strong>Scoped Storage:</strong> The App uses Android's Scoped Storage API, meaning vault contents are stored in the App's private directory, which is inaccessible to other apps and cannot be browsed through a standard file manager.</p>
+      <p><strong>What this means for you:</strong> Even if someone gains physical access to your device, your vault contents are encrypted and cannot be read without your PIN or biometric credential.</p>
+
+      <h2>6. Third-Party Libraries & Services</h2>
+      <p>NightVault integrates several open-source libraries to deliver its features. None of these libraries are configured to collect or transmit personal data from your device.</p>
+      
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Library</th>
+              <th>Purpose</th>
+              <th>Data Shared</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>SQLCipher</strong></td>
+              <td>AES-256 encrypted local database</td>
+              <td>None — runs locally</td>
+            </tr>
+            <tr>
+              <td><strong>Jetpack Security (security-crypto)</strong></td>
+              <td>File encryption</td>
+              <td>None — runs locally</td>
+            </tr>
+            <tr>
+              <td><strong>Room (SQLite)</strong></td>
+              <td>Local database layer</td>
+              <td>None — runs locally</td>
+            </tr>
+            <tr>
+              <td><strong>Retrofit & OkHttp</strong></td>
+              <td>HTTP networking for the built-in downloader</td>
+              <td>Network requests to URLs you choose only</td>
+            </tr>
+            <tr>
+              <td><strong>youtubedl-android (yt-dlp)</strong></td>
+              <td>Media downloading from websites</td>
+              <td>Connects to URLs you request only</td>
+            </tr>
+            <tr>
+              <td><strong>FFmpeg (youtubedl-ffmpeg)</strong></td>
+              <td>Media processing and format conversion</td>
+              <td>None — runs locally</td>
+            </tr>
+            <tr>
+              <td><strong>Lottie</strong></td>
+              <td>Smooth UI animations</td>
+              <td>None — runs locally</td>
+            </tr>
+            <tr>
+              <td><strong>WorkManager</strong></td>
+              <td>Reliable background task management</td>
+              <td>None — runs locally</td>
+            </tr>
+            <tr>
+              <td><strong>Hilt (Dependency Injection)</strong></td>
+              <td>Internal app architecture</td>
+              <td>None — runs locally</td>
+            </tr>
+            <tr>
+              <td><strong>Kotlin Coroutines</strong></td>
+              <td>Asynchronous operations</td>
+              <td>None — runs locally</td>
+            </tr>
+            <tr>
+              <td><strong>Cronet (Embedded)</strong></td>
+              <td>Chromium networking stack for the browser</td>
+              <td>Connects to URLs you navigate to only</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>Important note on downloading:</strong> When you use the built-in browser or downloader to download content from the internet, your device makes standard HTTP/HTTPS requests to those websites. Those websites may log your IP address in accordance with their own privacy policies. NightVault has no control over external websites. You are solely responsible for ensuring that any content you download complies with applicable laws and the terms of service of those websites.</p>
+
+      <h2>7. Data Stored Locally — Summary</h2>
+      <p>The following types of data may be stored inside NightVault's encrypted vault, based solely on what you choose to add:</p>
+      <ul>
+        <li>Photos, videos, and audio files you import or capture</li>
+        <li>PDF and document files you import</li>
+        <li>Contact information you choose to protect</li>
+        <li>Passwords and associated credentials you enter manually</li>
+        <li>Filenames, timestamps, and file sizes (stored in the encrypted database as metadata)</li>
+        <li>Download history within the App</li>
+      </ul>
+      <p>All of the above is stored exclusively on your device. None of it is accessible to us.</p>
+
+      <h2>8. Data Sharing</h2>
+      <p><strong>We do not share your data with anyone, for any reason.</strong></p>
+      <p>NightVault does not share any user data with:</p>
+      <ul>
+        <li>Third-party advertisers or marketing companies</li>
+        <li>Analytics or data broker services</li>
+        <li>Social media platforms</li>
+        <li>Government agencies (unless compelled by a valid legal order served directly to you, since we hold no data ourselves)</li>
+        <li>Any other entity</li>
+      </ul>
+      <p>Because all data is stored locally on your device and we have no servers receiving your data, we are technically incapable of sharing your vault contents even if requested.</p>
+
+      <h2>9. User-Generated Content & Downloads</h2>
+      <p>NightVault provides a built-in browser and media downloader (powered by yt-dlp) that allows you to download content from websites on the internet. Please note:</p>
+      <ul>
+        <li>You are solely responsible for the content you choose to download and store.</li>
+        <li>Downloading copyrighted material without authorisation may violate applicable laws and the terms of service of the source website.</li>
+        <li>NightVault does not monitor, filter, or review content you download.</li>
+        <li>We accept no liability for how you use the downloading feature.</li>
+      </ul>
+
+      <h2>10. Children's Privacy</h2>
+      <p>NightVault is not directed at children under the age of 13, or under the applicable age of digital consent in your region. We do not knowingly collect personal information from children.</p>
+      <p>If you are a parent or guardian and believe your child has used this App, please contact us at <a href="mailto:support.nightvault@gmail.com">support.nightvault@gmail.com</a>. Because all data is stored locally on the device, you can remove any data by clearing the App's storage or uninstalling the App.</p>
+
+      <h2>11. Your Rights & Data Control</h2>
+      <p>Because NightVault stores all data locally on your device, you have complete and direct control over your data at all times.</p>
+      <p><strong>To delete all vault data:</strong> Go to Settings → Clear All Data within the App, or go to your Android device's Settings → Apps → NightVault → Clear Storage.</p>
+      <p><strong>To delete individual files:</strong> Select any file within the vault and tap Delete.</p>
+      <p><strong>To remove all data permanently:</strong> Uninstall NightVault from your device. This removes all encrypted vault contents, the encrypted database, and all App data from your device.</p>
+      <p><strong>To revoke permissions:</strong> Go to your Android device's Settings → Apps → NightVault → Permissions and toggle off any permission at any time. Note that revoking certain permissions will disable related features.</p>
+      <p>Since we hold no data on any server, there is no account to delete and no request to make to us for data erasure.</p>
+
+      <h2>12. Data Retention</h2>
+      <p>NightVault does not retain any data on external servers because no data is ever sent to us. All data you store in the App remains on your device for as long as you choose to keep it. Data is deleted when you manually delete it within the App, clear App storage, or uninstall the App.</p>
+
+      <h2>13. Security Practices</h2>
+      <p>We take security seriously and have implemented the following measures:</p>
+      <ul>
+        <li>AES-256 encryption via SQLCipher for all database content</li>
+        <li>AES-256-GCM encryption via Jetpack Security for stored files</li>
+        <li>Biometric authentication using Android's hardware-backed secure enclave</li>
+        <li>Scoped Storage isolation — vault contents are inaccessible to other apps</li>
+        <li>Screenshot prevention — the App blocks screenshots while open to prevent accidental exposure</li>
+        <li>Discreet notifications — download notifications do not reveal file names or vault contents</li>
+        <li>Incognito Mode — optionally leaves no visible trace of recent app activity</li>
+        <li>Discreet Access Mode — hides vault content from the Android recent apps screen</li>
+        <li>Option to hide the App icon from the launcher — accessible only via dialler code or secret tap</li>
+      </ul>
+
+      <h2>14. Changes to This Privacy Policy</h2>
+      <p>We may update this Privacy Policy from time to time to reflect changes in the App's features, legal requirements, or best practices. When we make changes, we will update the "Last Updated" date at the top of this document and, where appropriate, notify you through an in-app notice.</p>
+      <p>We encourage you to review this Privacy Policy periodically. Continued use of the App after any changes constitutes your acceptance of the updated policy.</p>
+
+      <h2>15. Governing Law</h2>
+      <p>This Privacy Policy is governed by the laws of India. Any disputes arising in connection with this policy shall be subject to the exclusive jurisdiction of the courts of India.</p>
+
+      <h2>16. Contact Us</h2>
+      <p>If you have any questions, concerns, or requests regarding this Privacy Policy or the App's data practices, please contact us:</p>
+      <ul>
+        <li><strong>Developer:</strong> mShivam | App Studio</li>
+        <li><strong>Email:</strong> <a href="mailto:support.nightvault@gmail.com">support.nightvault@gmail.com</a></li>
+        <li><strong>Telegram Community:</strong> <a href="https://t.me/nightvaultConnect" target="_blank" rel="noopener noreferrer">https://t.me/nightvaultConnect</a></li>
+        <li><strong>Response Time:</strong> We aim to respond within 24 hours on business days.</li>
+      </ul>
+
+      <div class="divider" style="margin-top: 40px; margin-bottom: 24px;"></div>
+      
+      <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); font-style: italic;">
+        This Privacy Policy was written to comply with Google Play Store requirements, the General Data Protection Regulation (GDPR), the California Consumer Privacy Act (CCPA), India's Digital Personal Data Protection Act (DPDPA) 2023, and applicable global privacy standards.
+      </p>
+    </main>
+  </div>
+
+  <script>
+    // Particle Connection System
+    (function() {
+      const canvas = document.getElementById("particles-canvas");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+
+      let particles = [];
+      const PARTICLE_COUNT = 80;
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener("resize", resize);
+
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3,
+          size: Math.random() * 2 + 0.5,
+          opacity: Math.random() * 0.5 + 0.1,
+          hue: Math.random() > 0.5 ? 270 : 190, // primary or accent
+        });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Connections
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 150) {
+              const alpha = (1 - dist / 150) * 0.08;
+              ctx.beginPath();
+              ctx.strokeStyle = `hsla(270, 80%, 60%, ${alpha})`;
+              ctx.lineWidth = 0.5;
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.stroke();
+            }
+          }
+        }
+
+        // Draw dots
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+
+          if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+          if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+          ctx.beginPath();
+          const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 3);
+          gradient.addColorStop(0, `hsla(${p.hue}, 80%, 60%, ${p.opacity})`);
+          gradient.addColorStop(1, `hsla(${p.hue}, 80%, 60%, 0)`);
+          ctx.fillStyle = gradient;
+          ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        requestAnimationFrame(draw);
+      }
+
+      draw();
+    })();
+  </script>
+</body>
+</html>
