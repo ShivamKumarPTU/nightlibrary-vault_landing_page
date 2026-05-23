@@ -1,12 +1,19 @@
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { Moon, Github, Twitter, Mail } from "lucide-react";
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 import { RevealLine } from "./TextReveal";
 
 const footerLinks = [
   { label: "Features", href: "#features" },
   { label: "Preview", href: "#preview" },
   { label: "How it Works", href: "#how-it-works" },
+];
+
+const seoLinks = [
+  { label: "Photo Secure Storage App", href: "/features/photo-secure-storage-app" },
+  { label: "Private Video Downloader App", href: "/features/private-video-downloader-app" },
+  { label: "Encrypted Media App", href: "/features/encrypted-media-app" }
 ];
 
 const socialIcons = [
@@ -68,6 +75,30 @@ const Footer = () => {
                   transition={{ duration: 0.3 }}
                 />
               </motion.a>
+            ))}
+          </div>
+
+          {/* SEO Use Cases / Features Links */}
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-8 max-w-2xl mx-auto mt-2">
+            {seoLinks.map((link, i) => (
+              <motion.div
+                key={link.label}
+                initial={{ opacity: 0, y: 15 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.3 + i * 0.1 }}
+                whileHover={{ y: -2 }}
+                className="relative text-xs text-muted-foreground/60 hover:text-primary transition-colors group"
+              >
+                <Link to={link.href}>
+                  <RevealLine delay={i * 0.04}>{link.label}</RevealLine>
+                </Link>
+                <motion.span
+                  className="absolute -bottom-0.5 left-0 right-0 h-[1px] bg-primary origin-left"
+                  initial={{ scaleX: 0 }}
+                  whileHover={{ scaleX: 1 }}
+                  transition={{ duration: 0.3 }}
+                />
+              </motion.div>
             ))}
           </div>
 

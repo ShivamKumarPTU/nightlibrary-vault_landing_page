@@ -383,7 +383,19 @@ const AndroidMockupSlider = () => {
   );
 };
 
-const HeroSection = () => {
+interface HeroSectionProps {
+  titleLine1?: string;
+  titleLine2?: string;
+  titleLine3?: string;
+  subtitleText?: string;
+}
+
+const HeroSection = ({
+  titleLine1 = "Hide Your Media.",
+  titleLine2 = "Lock It.",
+  titleLine3 = "Protect It.",
+  subtitleText = "Store and play your photos and videos — completely private, always on your device. No cloud. No accounts"
+}: HeroSectionProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], [0, 180]);
@@ -447,15 +459,15 @@ const HeroSection = () => {
               className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] mb-6"
             >
               <MagneticWord>
-                <CharReveal delay={0.4}>Hide Your Media.</CharReveal>
+                <CharReveal delay={0.4}>{titleLine1}</CharReveal>
               </MagneticWord>
               <br />
               <MagneticWord className="text-gradient-primary">
-                <CharReveal delay={0.8}>Lock It.</CharReveal>
+                <CharReveal delay={0.8}>{titleLine2}</CharReveal>
               </MagneticWord>
               <br />
               <MagneticWord className="text-gradient-warm">
-                <CharReveal delay={1.2}>Protect It.</CharReveal>
+                <CharReveal delay={1.2}>{titleLine3}</CharReveal>
               </MagneticWord>
             </motion.h1>
 
@@ -467,7 +479,7 @@ const HeroSection = () => {
               className="text-lg sm:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed"
             >
               <WordReveal delay={1.7}>
-               Store and play your photos and videos — completely private, always on your device. No cloud. No accounts
+                {subtitleText}
               </WordReveal>
             </motion.p>
 
